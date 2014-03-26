@@ -1,0 +1,20 @@
+PODS:
+  - FCModel (HEAD based on 0.2.0):
+    - FMDB (~> 2.1)
+  - FMDB (2.2):
+    - FMDB/standard
+  - FMDB/common (2.2)
+  - FMDB/standard (2.2):
+    - FMDB/common
+  - SVProgressHUD (1.0)
+
+DEPENDENCIES:
+  - FCModel (HEAD)
+  - SVProgressHUD
+
+SPEC CHECKSUMS:
+  FCModel: 52cc8da1e3bab0ba3c769f77514f5bb9703c6ce0
+  FMDB: 97472cfacf0d9e445e915704fb43b4b142799c36
+  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
+
+COCOAPODS: 0.29.0
