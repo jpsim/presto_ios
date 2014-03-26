@@ -16,7 +16,6 @@
 
 @interface PRELoginViewController () <UITextFieldDelegate>
 
-@property (nonatomic, strong) UIView             * containerView;
 @property (nonatomic, strong) UIImageView        * logoView;
 @property (nonatomic, strong) UIView             * topSpacerView;
 @property (nonatomic, strong) UIView             * bottomSpacerView;
@@ -26,7 +25,7 @@
 @property (nonatomic, strong) PRELoginField      * cardField;
 @property (nonatomic, strong) UIButton           * loginButton;
 @property (nonatomic, strong) UIButton           * cardLoginButton;
-@property (nonatomic, strong) NSLayoutConstraint * containerBottom;
+@property (nonatomic, strong) NSLayoutConstraint * bottomConstraint;
 
 @end
 
@@ -73,8 +72,8 @@
 - (void)setupView {
     // Background
     self.view.backgroundColor = [UIColor lightGreenColor];
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
     
-    [self setupContainerView];
     [self setupTopSpacerView];
     [self setupLogoView];
     if (_loginType == PRELoginFieldTypeCard) {
@@ -88,63 +87,53 @@
     [self setupBottomSpacerView];
 }
 
-- (void)setupContainerView {
-    self.containerView = [UIView newForAutolayoutAndAddToView:self.view];
-    [self.containerView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
-    NSLayoutConstraint *containerTop = constraintEqual(self.containerView, self.view, NSLayoutAttributeTop, 0);
-    NSLayoutConstraint *containerLeft = constraintEqual(self.containerView, self.view, NSLayoutAttributeLeft, 0);
-    NSLayoutConstraint *containerRight = constraintEqual(self.containerView, self.view, NSLayoutAttributeRight, 0);
-    self.containerBottom = constraintEqual(self.containerView, self.view, NSLayoutAttributeBottom, 0);
-    [self.view addConstraints:@[containerTop, containerLeft, containerRight, self.containerBottom]];
-}
-
 - (void)setupTopSpacerView {
-    self.topSpacerView = [UIView newForAutolayoutAndAddToView:self.containerView];
-    NSLayoutConstraint *top = constraintEqual(self.topSpacerView, self.containerView, NSLayoutAttributeTop, 0);
-    NSLayoutConstraint *centerX = constraintCenterX(self.topSpacerView, self.containerView);
+    self.topSpacerView = [UIView newForAutolayoutAndAddToView:self.view];
+    NSLayoutConstraint *top = constraintEqualAttributes(self.topSpacerView, (UIView *)self.topLayoutGuide, NSLayoutAttributeTop, NSLayoutAttributeBaseline, 0);
+    NSLayoutConstraint *centerX = constraintCenterX(self.topSpacerView, self.view);
     NSLayoutConstraint *width = constraintAbsolute(self.topSpacerView, NSLayoutAttributeWidth, 0);
-    [self.containerView addConstraints:@[top, centerX, width]];
+    [self.view addConstraints:@[top, centerX, width]];
 }
 
 - (void)setupLogoView {
-    self.logoView = [UIImageView newForAutolayoutAndAddToView:self.containerView];
+    self.logoView = [UIImageView newForAutolayoutAndAddToView:self.view];
     self.logoView.image = [UIImage imageNamed:@"logo"];
-    NSLayoutConstraint *logoCenterX = constraintCenterX(self.logoView, self.containerView);
+    NSLayoutConstraint *logoCenterX = constraintCenterX(self.logoView, self.view);
     NSLayoutConstraint *top = constraintEqualAttributes(self.logoView, self.topSpacerView, NSLayoutAttributeTop, NSLayoutAttributeBottom, 0);
-    [self.containerView addConstraints:@[logoCenterX, top]];
+    [self.view addConstraints:@[logoCenterX, top]];
 }
 
 - (void)setupCardField {
-    self.cardField = [PRELoginField newForAutolayoutAndAddToView:self.containerView];
+    self.cardField = [PRELoginField newForAutolayoutAndAddToView:self.view];
     self.cardField.fieldType = PRELoginFieldTypeCard;
     self.cardField.delegate = self;
     NSArray *cardSize = constraintsAbsoluteSize(self.cardField, 252, 44);
     NSLayoutConstraint *cardX = constraintCenterX(self.cardField, self.logoView);
     NSLayoutConstraint *cardTrail = constraintTrailVertically(self.cardField, self.logoView, 24);
-    [self.containerView addConstraints:cardSize];
-    [self.containerView addConstraints:@[cardX, cardTrail]];
+    [self.view addConstraints:cardSize];
+    [self.view addConstraints:@[cardX, cardTrail]];
 }
 
 - (void)setupUsernameField {
-    self.usernameField = [PRELoginField newForAutolayoutAndAddToView:self.containerView];
+    self.usernameField = [PRELoginField newForAutolayoutAndAddToView:self.view];
     self.usernameField.fieldType = PRELoginFieldTypeUsername;
     self.usernameField.delegate = self;
     NSArray *usernameSize = constraintsAbsoluteSize(self.usernameField, 230, 44);
     NSLayoutConstraint *usernameX = constraintCenterX(self.usernameField, self.logoView);
     NSLayoutConstraint *usernameTrail = constraintTrailVertically(self.usernameField, self.logoView, 24);
-    [self.containerView addConstraints:usernameSize];
-    [self.containerView addConstraints:@[usernameX, usernameTrail]];
+    [self.view addConstraints:usernameSize];
+    [self.view addConstraints:@[usernameX, usernameTrail]];
 }
 
 - (void)setupPasswordField {
-    self.passwordField = [PRELoginField newForAutolayoutAndAddToView:self.containerView];
+    self.passwordField = [PRELoginField newForAutolayoutAndAddToView:self.view];
     self.passwordField.fieldType = PRELoginFieldTypePassword;
     self.passwordField.delegate = self;
     NSArray *passwordSize = constraintsEqualSize(self.passwordField, self.usernameField, 0, 0);
     NSLayoutConstraint *passwordX = constraintCenterX(self.passwordField, self.usernameField);
     NSLayoutConstraint *passwordTrail = constraintTrailVertically(self.passwordField, self.usernameField, 24);
-    [self.containerView addConstraints:passwordSize];
-    [self.containerView addConstraints:@[passwordX, passwordTrail]];
+    [self.view addConstraints:passwordSize];
+    [self.view addConstraints:@[passwordX, passwordTrail]];
 }
 
 - (void)setupLoginButton {
@@ -152,23 +141,23 @@
     [self.loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [self.loginButton setTitle:@"Log In" forState:UIControlStateNormal];
     self.loginButton.enabled = NO;
-    [self.loginButton prepareForAutolayoutAndAddToView:self.containerView];
+    [self.loginButton prepareForAutolayoutAndAddToView:self.view];
     BOOL isCardLogin = (_loginType == PRELoginFieldTypeCard);
     NSArray *loginButtonSize = constraintsEqualSize(self.loginButton, isCardLogin ? self.cardField : self.passwordField, 0, 0);
     NSLayoutConstraint *loginButtonX = constraintCenterX(self.loginButton, isCardLogin ? self.cardField : self.passwordField);
     NSLayoutConstraint *loginButtonTrail = constraintTrailVertically(self.loginButton, isCardLogin ? self.cardField : self.passwordField, 0);
-    [self.containerView addConstraints:loginButtonSize];
-    [self.containerView addConstraints:@[loginButtonX, loginButtonTrail]];
+    [self.view addConstraints:loginButtonSize];
+    [self.view addConstraints:@[loginButtonX, loginButtonTrail]];
 }
 
 - (void)setupBottomSpacerView {
-    self.bottomSpacerView = [UIView newForAutolayoutAndAddToView:self.containerView];
+    self.bottomSpacerView = [UIView newForAutolayoutAndAddToView:self.view];
     NSLayoutConstraint *top = constraintEqualAttributes(self.bottomSpacerView, self.loginButton, NSLayoutAttributeTop, NSLayoutAttributeBottom, 0);
-    NSLayoutConstraint *centerX = constraintCenterX(self.bottomSpacerView, self.containerView);
+    NSLayoutConstraint *centerX = constraintCenterX(self.bottomSpacerView, self.view);
     NSLayoutConstraint *width = constraintAbsolute(self.bottomSpacerView, NSLayoutAttributeWidth, 0);
-    NSLayoutConstraint *bottom = constraintEqual(self.bottomSpacerView, self.containerView, NSLayoutAttributeBottom, 0);
+    self.bottomConstraint = constraintEqualAttributes(self.bottomSpacerView, (UIView *)self.bottomLayoutGuide, NSLayoutAttributeBottom, NSLayoutAttributeTop, 0);
     NSLayoutConstraint *height = constraintEqual(self.topSpacerView, self.bottomSpacerView, NSLayoutAttributeHeight, 0);
-    [self.containerView addConstraints:@[top, centerX, width, bottom, height]];
+    [self.view addConstraints:@[top, centerX, width, self.bottomConstraint, height]];
 }
 
 - (void)setupCardLoginButton {
@@ -279,10 +268,10 @@
     BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
     CGFloat height = isPortrait ? keyboardFrame.size.height : keyboardFrame.size.width;
     
-    self.containerBottom.constant = -height;
+    self.bottomConstraint.constant = -height;
     
     [UIView animateWithDuration:animationDuration animations:^{
-        [self.containerView layoutIfNeeded];
+        [self.view layoutIfNeeded];
     }];
 }
 
@@ -290,10 +279,10 @@
     NSDictionary *info = notification.userInfo;
     NSTimeInterval animationDuration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    self.containerBottom.constant = 0;
+    self.bottomConstraint.constant = 0;
     
     [UIView animateWithDuration:animationDuration animations:^{
-        [self.containerView layoutIfNeeded];
+        [self.view layoutIfNeeded];
     }];
 }
 
