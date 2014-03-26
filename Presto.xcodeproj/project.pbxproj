@@ -10,6 +10,7 @@
 		44805004431D41B2903B2E8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD6278F80844286A1269BFD /* main.m */; };
 		BCA45123264546EB92AEBA24 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86884750D4734C8C95AD4F49 /* libPods.a */; };
 		BE921BC24D3F4D99B9886474 /* PREAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C937F6E36848E8A6278D2F /* PREAppDelegate.m */; };
+		E82C07DF18E29B1E000207BF /* PREBottomConstraintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E82C07DE18E29B1E000207BF /* PREBottomConstraintViewController.m */; };
 		E84E9FF418E2724600E53D6A /* PRENavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E84E9FF318E2724600E53D6A /* PRENavigationViewController.m */; };
 		E85717E118E27E03008AFD2E /* PREAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E85717E018E27E03008AFD2E /* PREAPIClient.m */; };
 		E8BC795218E260D200A5AE27 /* PRELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BC795118E260D200A5AE27 /* PRELoginViewController.m */; };
@@ -43,6 +44,8 @@
 		D6148BFC9C7B4F3C9C62B762 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D9BC00B2A4A34D5EADCB1DAD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E0D2B5E25CC94AC2B1BEB989 /* Presto-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Presto-Info.plist"; sourceTree = "<group>"; };
+		E82C07DD18E29B1E000207BF /* PREBottomConstraintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREBottomConstraintViewController.h; sourceTree = "<group>"; };
+		E82C07DE18E29B1E000207BF /* PREBottomConstraintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREBottomConstraintViewController.m; sourceTree = "<group>"; };
 		E84E9FF218E2724600E53D6A /* PRENavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRENavigationViewController.h; sourceTree = "<group>"; };
 		E84E9FF318E2724600E53D6A /* PRENavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRENavigationViewController.m; sourceTree = "<group>"; };
 		E85717DF18E27E03008AFD2E /* PREAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREAPIClient.h; sourceTree = "<group>"; };
@@ -230,6 +233,7 @@
 		C85CEB95D2804480B8F15311 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E82C07DC18E29B12000207BF /* Bottom Constraint */,
 				E84E9FF118E2723A00E53D6A /* Navigation Controller */,
 				E8BC794F18E260C800A5AE27 /* Login */,
 			);
@@ -245,6 +249,15 @@
 				7C6D3210421D43A688D920B7 /* Resources */,
 			);
 			path = Presto;
+			sourceTree = "<group>";
+		};
+		E82C07DC18E29B12000207BF /* Bottom Constraint */ = {
+			isa = PBXGroup;
+			children = (
+				E82C07DD18E29B1E000207BF /* PREBottomConstraintViewController.h */,
+				E82C07DE18E29B1E000207BF /* PREBottomConstraintViewController.m */,
+			);
+			path = "Bottom Constraint";
 			sourceTree = "<group>";
 		};
 		E84E9FF118E2723A00E53D6A /* Navigation Controller */ = {
@@ -428,6 +441,7 @@
 				BE921BC24D3F4D99B9886474 /* PREAppDelegate.m in Sources */,
 				E85717E118E27E03008AFD2E /* PREAPIClient.m in Sources */,
 				E8F6A3D218E264FD00CD3D44 /* UIView+AutoLayout.m in Sources */,
+				E82C07DF18E29B1E000207BF /* PREBottomConstraintViewController.m in Sources */,
 				44805004431D41B2903B2E8B /* main.m in Sources */,
 				E84E9FF418E2724600E53D6A /* PRENavigationViewController.m in Sources */,
 				E8F6A3CE18E2649C00CD3D44 /* PRELoginField.m in Sources */,

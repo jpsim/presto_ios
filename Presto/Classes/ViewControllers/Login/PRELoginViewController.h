@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 // Classes
+#import "PREBottomConstraintViewController.h"
 #import "PRELoginField.h"
 
-@interface PRELoginViewController : UIViewController
+@interface PRELoginViewController : PREBottomConstraintViewController
 
 - (instancetype)initWithLoginType:(PRELoginFieldType)type;
 

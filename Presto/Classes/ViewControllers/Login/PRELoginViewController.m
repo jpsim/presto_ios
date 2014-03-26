@@ -25,7 +25,6 @@
 @property (nonatomic, strong) PRELoginField      * cardField;
 @property (nonatomic, strong) UIButton           * loginButton;
 @property (nonatomic, strong) UIButton           * cardLoginButton;
-@property (nonatomic, strong) NSLayoutConstraint * bottomConstraint;
 
 @end
 
@@ -51,16 +50,6 @@
     [UIView performWithoutAnimation:^{
         [self.view layoutIfNeeded];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self observeKeyboard];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - UI
@@ -89,7 +78,7 @@
 
 - (void)setupTopSpacerView {
     self.topSpacerView = [UIView newForAutolayoutAndAddToView:self.view];
-    NSLayoutConstraint *top = constraintEqualAttributes(self.topSpacerView, (UIView *)self.topLayoutGuide, NSLayoutAttributeTop, NSLayoutAttributeBaseline, 0);
+    NSLayoutConstraint *top = constraintEqualAttributes(self.topSpacerView, (UIView *)self.topLayoutGuide, NSLayoutAttributeTop, NSLayoutAttributeTop, 0);
     NSLayoutConstraint *centerX = constraintCenterX(self.topSpacerView, self.view);
     NSLayoutConstraint *width = constraintAbsolute(self.topSpacerView, NSLayoutAttributeWidth, 0);
     [self.view addConstraints:@[top, centerX, width]];
@@ -155,9 +144,10 @@
     NSLayoutConstraint *top = constraintEqualAttributes(self.bottomSpacerView, self.loginButton, NSLayoutAttributeTop, NSLayoutAttributeBottom, 0);
     NSLayoutConstraint *centerX = constraintCenterX(self.bottomSpacerView, self.view);
     NSLayoutConstraint *width = constraintAbsolute(self.bottomSpacerView, NSLayoutAttributeWidth, 0);
-    self.bottomConstraint = constraintEqualAttributes(self.bottomSpacerView, (UIView *)self.bottomLayoutGuide, NSLayoutAttributeBottom, NSLayoutAttributeTop, 0);
+    NSLayoutConstraint *bottom = constraintEqual(self.bottomSpacerView, (UIView *)self.keyboardLayoutGuide, NSLayoutAttributeBottom, 0);
+    bottom.priority = UILayoutPriorityDefaultHigh;
     NSLayoutConstraint *height = constraintEqual(self.topSpacerView, self.bottomSpacerView, NSLayoutAttributeHeight, 0);
-    [self.view addConstraints:@[top, centerX, width, self.bottomConstraint, height]];
+    [self.view addConstraints:@[top, centerX, width, bottom, height]];
 }
 
 - (void)setupCardLoginButton {
@@ -242,48 +232,10 @@
 
 #pragma mark - Keyboard Methods
 
-- (void)observeKeyboard {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillChangeFrameNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-}
-
 - (void)dismissKeyboard {
     [self.cardField resignFirstResponder];
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
-}
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-    NSDictionary *info = notification.userInfo;
-    NSValue *kbFrame = info[UIKeyboardFrameEndUserInfoKey];
-    NSTimeInterval animationDuration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    CGRect keyboardFrame = kbFrame.CGRectValue;
-    
-    BOOL isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
-    CGFloat height = isPortrait ? keyboardFrame.size.height : keyboardFrame.size.width;
-    
-    self.bottomConstraint.constant = -height;
-    
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.view layoutIfNeeded];
-    }];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    NSDictionary *info = notification.userInfo;
-    NSTimeInterval animationDuration = [info[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    self.bottomConstraint.constant = 0;
-    
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.view layoutIfNeeded];
-    }];
 }
 
 @end
