@@ -57,12 +57,17 @@ static NSString *const kPREAPIKEY = @"";
 #pragma mark - Helpers
 
 + (NSURL *)urlWithPath:(NSString *)path {
-    return [NSURL URLWithString:[path stringByAppendingFormat:@"?api_key=%@", kPREAPIKEY]
-                  relativeToURL:[NSURL URLWithString:@"https://presto-api.herokuapp.com"]];
+    return [NSURL URLWithString:path relativeToURL:[NSURL URLWithString:@"https://presto-api.herokuapp.com"]];
+}
+
++ (NSURLRequest *)requestWithPath:(NSString *)path {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self urlWithPath:path]];
+    [request setValue:kPREAPIKEY forHTTPHeaderField:@"x-api-key"];
+    return request;
 }
 
 + (void)getPath:(NSString *)path completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler {
-    [[[self sharedClient] dataTaskWithURL:[self urlWithPath:path] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [[[self sharedClient] dataTaskWithRequest:[self requestWithPath:path] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(nil, response, error);
