@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) UIView             * containerView;
 @property (nonatomic, strong) UIImageView        * logoView;
+@property (nonatomic, strong) UIView             * topSpacerView;
+@property (nonatomic, strong) UIView             * bottomSpacerView;
 @property (nonatomic, assign) PRELoginFieldType    loginType;
 @property (nonatomic, strong) PRELoginField      * usernameField;
 @property (nonatomic, strong) PRELoginField      * passwordField;
@@ -73,6 +75,7 @@
     self.view.backgroundColor = [UIColor lightGreenColor];
     
     [self setupContainerView];
+    [self setupTopSpacerView];
     [self setupLogoView];
     if (_loginType == PRELoginFieldTypeCard) {
         [self setupCardField];
@@ -82,6 +85,7 @@
         [self setupCardLoginButton];
     }
     [self setupLoginButton];
+    [self setupBottomSpacerView];
 }
 
 - (void)setupContainerView {
@@ -94,12 +98,20 @@
     [self.view addConstraints:@[containerTop, containerLeft, containerRight, self.containerBottom]];
 }
 
+- (void)setupTopSpacerView {
+    self.topSpacerView = [UIView newForAutolayoutAndAddToView:self.containerView];
+    NSLayoutConstraint *top = constraintEqual(self.topSpacerView, self.containerView, NSLayoutAttributeTop, 0);
+    NSLayoutConstraint *centerX = constraintCenterX(self.topSpacerView, self.containerView);
+    NSLayoutConstraint *width = constraintAbsolute(self.topSpacerView, NSLayoutAttributeWidth, 0);
+    [self.containerView addConstraints:@[top, centerX, width]];
+}
+
 - (void)setupLogoView {
     self.logoView = [UIImageView newForAutolayoutAndAddToView:self.containerView];
     self.logoView.image = [UIImage imageNamed:@"logo"];
-    CGFloat offset = (_loginType == PRELoginFieldTypeCard) ? -30 : -76;
-    NSArray *logoCenter = constraintsCenterWithOffset(self.logoView, self.containerView, 0, offset);
-    [self.containerView addConstraints:logoCenter];
+    NSLayoutConstraint *logoCenterX = constraintCenterX(self.logoView, self.containerView);
+    NSLayoutConstraint *top = constraintEqualAttributes(self.logoView, self.topSpacerView, NSLayoutAttributeTop, NSLayoutAttributeBottom, 0);
+    [self.containerView addConstraints:@[logoCenterX, top]];
 }
 
 - (void)setupCardField {
@@ -147,6 +159,16 @@
     NSLayoutConstraint *loginButtonTrail = constraintTrailVertically(self.loginButton, isCardLogin ? self.cardField : self.passwordField, 0);
     [self.containerView addConstraints:loginButtonSize];
     [self.containerView addConstraints:@[loginButtonX, loginButtonTrail]];
+}
+
+- (void)setupBottomSpacerView {
+    self.bottomSpacerView = [UIView newForAutolayoutAndAddToView:self.containerView];
+    NSLayoutConstraint *top = constraintEqualAttributes(self.bottomSpacerView, self.loginButton, NSLayoutAttributeTop, NSLayoutAttributeBottom, 0);
+    NSLayoutConstraint *centerX = constraintCenterX(self.bottomSpacerView, self.containerView);
+    NSLayoutConstraint *width = constraintAbsolute(self.bottomSpacerView, NSLayoutAttributeWidth, 0);
+    NSLayoutConstraint *bottom = constraintEqual(self.bottomSpacerView, self.containerView, NSLayoutAttributeBottom, 0);
+    NSLayoutConstraint *height = constraintEqual(self.topSpacerView, self.bottomSpacerView, NSLayoutAttributeHeight, 0);
+    [self.containerView addConstraints:@[top, centerX, width, bottom, height]];
 }
 
 - (void)setupCardLoginButton {
