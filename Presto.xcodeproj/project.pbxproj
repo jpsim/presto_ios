@@ -8,8 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		44805004431D41B2903B2E8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD6278F80844286A1269BFD /* main.m */; };
-		BBAC664F492B480FA0714311 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9C70AE63EEA400FA02E59FC /* libPods.a */; };
+		BCA45123264546EB92AEBA24 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86884750D4734C8C95AD4F49 /* libPods.a */; };
 		BE921BC24D3F4D99B9886474 /* PREAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C937F6E36848E8A6278D2F /* PREAppDelegate.m */; };
+		E84E9FF418E2724600E53D6A /* PRENavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E84E9FF318E2724600E53D6A /* PRENavigationViewController.m */; };
+		E85717E118E27E03008AFD2E /* PREAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E85717E018E27E03008AFD2E /* PREAPIClient.m */; };
+		E8BC795218E260D200A5AE27 /* PRELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BC795118E260D200A5AE27 /* PRELoginViewController.m */; };
+		E8BC795618E2613800A5AE27 /* UIColor+PREAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BC795518E2613800A5AE27 /* UIColor+PREAdditions.m */; };
+		E8F6A3CE18E2649C00CD3D44 /* PRELoginField.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F6A3CD18E2649C00CD3D44 /* PRELoginField.m */; };
+		E8F6A3D218E264FD00CD3D44 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F6A3D118E264FD00CD3D44 /* UIView+AutoLayout.m */; };
 		F1ED4CF8BAB54C05B968D70F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D748DA7A88E45A5B22983B2 /* Images.xcassets */; };
 		FFFF5677EBFB47528A046DDB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6148BFC9C7B4F3C9C62B762 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -29,14 +35,26 @@
 		1D074EBC46144EB9BC9F5001 /* PREAppDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREAppDelegate.h; sourceTree = "<group>"; };
 		2D748DA7A88E45A5B22983B2 /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5F0A3976661548C29BD46FC5 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		86884750D4734C8C95AD4F49 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		86D89B9C8DE94BDD801B1A50 /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		BCCA4C215248433A877DAEE4 /* Presto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Presto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3771816935341A2B9158B5C /* Presto-Prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Presto-Prefix.pch"; sourceTree = "<group>"; };
 		D0C937F6E36848E8A6278D2F /* PREAppDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREAppDelegate.m; sourceTree = "<group>"; };
-		D234E921A14948088263FC8D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D6148BFC9C7B4F3C9C62B762 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		D9C70AE63EEA400FA02E59FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9BC00B2A4A34D5EADCB1DAD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E0D2B5E25CC94AC2B1BEB989 /* Presto-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Presto-Info.plist"; sourceTree = "<group>"; };
+		E84E9FF218E2724600E53D6A /* PRENavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRENavigationViewController.h; sourceTree = "<group>"; };
+		E84E9FF318E2724600E53D6A /* PRENavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRENavigationViewController.m; sourceTree = "<group>"; };
+		E85717DF18E27E03008AFD2E /* PREAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREAPIClient.h; sourceTree = "<group>"; };
+		E85717E018E27E03008AFD2E /* PREAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREAPIClient.m; sourceTree = "<group>"; };
+		E8BC795018E260D200A5AE27 /* PRELoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRELoginViewController.h; sourceTree = "<group>"; };
+		E8BC795118E260D200A5AE27 /* PRELoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRELoginViewController.m; sourceTree = "<group>"; };
+		E8BC795418E2613800A5AE27 /* UIColor+PREAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PREAdditions.h"; sourceTree = "<group>"; };
+		E8BC795518E2613800A5AE27 /* UIColor+PREAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PREAdditions.m"; sourceTree = "<group>"; };
+		E8F6A3CC18E2649C00CD3D44 /* PRELoginField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRELoginField.h; sourceTree = "<group>"; };
+		E8F6A3CD18E2649C00CD3D44 /* PRELoginField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRELoginField.m; sourceTree = "<group>"; };
+		E8F6A3D018E264FD00CD3D44 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AutoLayout.h"; sourceTree = "<group>"; };
+		E8F6A3D118E264FD00CD3D44 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AutoLayout.m"; sourceTree = "<group>"; };
 		EAD6278F80844286A1269BFD /* main.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,7 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFFF5677EBFB47528A046DDB /* Foundation.framework in Frameworks */,
-				BBAC664F492B480FA0714311 /* libPods.a in Frameworks */,
+				BCA45123264546EB92AEBA24 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,7 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				8E28D54BBAB6476682011F60 /* iOS */,
-				D9C70AE63EEA400FA02E59FC /* libPods.a */,
+				86884750D4734C8C95AD4F49 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -85,7 +103,7 @@
 				212EB3711BFD4FA7A05A38DD /* UnitTests */,
 				0DD4D5BB7DD74D97913E1906 /* Frameworks */,
 				979B2FEA492E495A887DC69D /* Products */,
-				D234E921A14948088263FC8D /* Pods.xcconfig */,
+				D9BC00B2A4A34D5EADCB1DAD /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +148,7 @@
 		7535AB92BA0E4B45A8769EDF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E84E9FF518E27CCC00E53D6A /* API */,
 				46E863A66E7C4040A99650E6 /* Controllers */,
 				B7DAD5D9A85040C88B7B9FF7 /* DataSources */,
 				BF9191ABFBE246B9825F831F /* Delegates */,
@@ -178,6 +197,7 @@
 		9CF1221B1BDA49979476D119 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E8F6A3CB18E2649100CD3D44 /* Login Field */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,6 +205,8 @@
 		AEBDED4D28F44E0CA8608A8E /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				E8BC795318E2612C00A5AE27 /* UIColor */,
+				E8F6A3CF18E264F300CD3D44 /* UIView */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -208,6 +230,8 @@
 		C85CEB95D2804480B8F15311 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E84E9FF118E2723A00E53D6A /* Navigation Controller */,
+				E8BC794F18E260C800A5AE27 /* Login */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -223,6 +247,60 @@
 			path = Presto;
 			sourceTree = "<group>";
 		};
+		E84E9FF118E2723A00E53D6A /* Navigation Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E84E9FF218E2724600E53D6A /* PRENavigationViewController.h */,
+				E84E9FF318E2724600E53D6A /* PRENavigationViewController.m */,
+			);
+			path = "Navigation Controller";
+			sourceTree = "<group>";
+		};
+		E84E9FF518E27CCC00E53D6A /* API */ = {
+			isa = PBXGroup;
+			children = (
+				E85717DF18E27E03008AFD2E /* PREAPIClient.h */,
+				E85717E018E27E03008AFD2E /* PREAPIClient.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		E8BC794F18E260C800A5AE27 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E8BC795018E260D200A5AE27 /* PRELoginViewController.h */,
+				E8BC795118E260D200A5AE27 /* PRELoginViewController.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		E8BC795318E2612C00A5AE27 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				E8BC795418E2613800A5AE27 /* UIColor+PREAdditions.h */,
+				E8BC795518E2613800A5AE27 /* UIColor+PREAdditions.m */,
+			);
+			path = UIColor;
+			sourceTree = "<group>";
+		};
+		E8F6A3CB18E2649100CD3D44 /* Login Field */ = {
+			isa = PBXGroup;
+			children = (
+				E8F6A3CC18E2649C00CD3D44 /* PRELoginField.h */,
+				E8F6A3CD18E2649C00CD3D44 /* PRELoginField.m */,
+			);
+			path = "Login Field";
+			sourceTree = "<group>";
+		};
+		E8F6A3CF18E264F300CD3D44 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				E8F6A3D018E264FD00CD3D44 /* UIView+AutoLayout.h */,
+				E8F6A3D118E264FD00CD3D44 /* UIView+AutoLayout.m */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -230,11 +308,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CED6C46306BE4639B12AC374 /* Build configuration list for PBXNativeTarget "Presto" */;
 			buildPhases = (
-				4DAC5917F64A4F548DD17308 /* Check Pods Manifest.lock */,
+				9830D7667B214ADC9D851750 /* Check Pods Manifest.lock */,
 				79AAFB63DFF5483BB338B325 /* Sources */,
 				13F6A9D3EA2B43DA9BBF4EA6 /* Frameworks */,
 				DF99D31D6DD3462B81156430 /* Resources */,
-				3DB1BFD8DFDC4D1CB26556CA /* Copy Pods Resources */,
+				E993C8332070468A8933C78C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -310,22 +388,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3DB1BFD8DFDC4D1CB26556CA /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4DAC5917F64A4F548DD17308 /* Check Pods Manifest.lock */ = {
+		9830D7667B214ADC9D851750 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -340,6 +403,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		E993C8332070468A8933C78C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -348,7 +426,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE921BC24D3F4D99B9886474 /* PREAppDelegate.m in Sources */,
+				E85717E118E27E03008AFD2E /* PREAPIClient.m in Sources */,
+				E8F6A3D218E264FD00CD3D44 /* UIView+AutoLayout.m in Sources */,
 				44805004431D41B2903B2E8B /* main.m in Sources */,
+				E84E9FF418E2724600E53D6A /* PRENavigationViewController.m in Sources */,
+				E8F6A3CE18E2649C00CD3D44 /* PRELoginField.m in Sources */,
+				E8BC795218E260D200A5AE27 /* PRELoginViewController.m in Sources */,
+				E8BC795618E2613800A5AE27 /* UIColor+PREAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +456,7 @@
 /* Begin XCBuildConfiguration section */
 		0943828630174890AFFD71FB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D234E921A14948088263FC8D /* Pods.xcconfig */;
+			baseConfigurationReference = D9BC00B2A4A34D5EADCB1DAD /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
@@ -489,7 +573,7 @@
 		};
 		7D97D883DB6E4093B4BE6BBF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D234E921A14948088263FC8D /* Pods.xcconfig */;
+			baseConfigurationReference = D9BC00B2A4A34D5EADCB1DAD /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
