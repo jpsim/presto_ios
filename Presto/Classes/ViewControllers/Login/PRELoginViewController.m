@@ -15,6 +15,9 @@
 // Categories
 #import "UIColor+PREAdditions.h"
 #import "UIView+AutoLayout.h"
+// Models
+#import "PREUser.h"
+#import "PRECard.h"
 
 @interface PRELoginViewController () <UITextFieldDelegate>
 
@@ -166,34 +169,40 @@
 
 - (void)login {
     [self dismissKeyboard];
+    PREAPIResponseBlock completion = ^(id responseObject, NSURLResponse *response, NSError *error){
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        } else {
+            PRECard *card = [PRECard instanceWithPrimaryKey:responseObject[@"number"]];
+            card.status = responseObject[@"status"];
+            card.balance = responseObject[@"balance"];
+            [card save];
+            [PREUser saveNewUserWithUsername:self.usernameField.text
+                                    password:self.passwordField.text
+                                        card:card];
+            [self launchMainApp];
+        }
+    };
     if (_loginType == PRELoginFieldTypeCard) {
         [SVProgressHUD showWithStatus:@"Logging in" maskType:SVProgressHUDMaskTypeBlack];
-        [PREAPIClient getCardStatusWithCardNumber:self.cardField.text completion:^(id responseObject, NSError *error) {
-            if (error) {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            } else {
-                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Balance: %@", responseObject[@"balance"]]];
-            }
-            [self launchMainApp];
-        }];
+        [PREAPIClient getCardStatusWithCardNumber:self.cardField.text completion:completion];
     } else {
         if (self.usernameField.text.length == 0) {
             [SVProgressHUD showErrorWithStatus:@"No username"];
         } else {
             [SVProgressHUD showWithStatus:@"Logging in" maskType:SVProgressHUDMaskTypeBlack];
-            [PREAPIClient getCardStatusWithUsername:self.usernameField.text password:self.passwordField.text completion:^(id responseObject, NSError *error) {
-                if (error) {
-                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-                } else {
-                    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Balance: %@", responseObject[@"balance"]]];
-                }
-                [self launchMainApp];
+            [PREAPIClient getCardStatusWithUsername:self.usernameField.text password:self.passwordField.text completion:completion];
+            [PREAPIClient getUserWithUsername:self.usernameField.text password:self.passwordField.text completion:^(id responseObject, NSURLResponse *response, NSError *error) {
+                PREUser *user = [PREUser instanceWithPrimaryKey:responseObject[@"card_number"]];
+                [user updateWithAPIResponseDict:responseObject];
+                [user save];
             }];
         }
     }
 }
 
 - (void)launchMainApp {
+    [SVProgressHUD dismiss];
     [self presentViewController:[[PREMainViewController alloc] init] animated:NO completion:nil];
 }
 

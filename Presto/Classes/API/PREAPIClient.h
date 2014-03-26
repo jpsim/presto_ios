@@ -8,12 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^PREAPIResponseBlock)(id responseObject, NSError *error);
+typedef void(^PREAPIResponseBlock)(id responseObject, NSURLResponse *response, NSError *error);
 
 @interface PREAPIClient : NSURLSession
+
++ (void)getCardStatusForCurrentUserWithCompletion:(PREAPIResponseBlock)completion;
 
 + (void)getCardStatusWithUsername:(NSString *)username password:(NSString *)password completion:(PREAPIResponseBlock)completion;
 
 + (void)getCardStatusWithCardNumber:(NSString *)cardNumber completion:(PREAPIResponseBlock)completion;
+
++ (void)getUserWithUsername:(NSString *)username password:(NSString *)password completion:(PREAPIResponseBlock)completion;
 
 @end

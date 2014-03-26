@@ -10,11 +10,17 @@
 // Categories
 #import "UIColor+PREAdditions.h"
 #import "UIView+AutoLayout.h"
+// Model
+#import "PREUser.h"
+#import "PRECard.h"
+// API
+#import "PREAPIClient.h"
 
 @interface PREMainViewController ()
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *balanceLabel;
+@property (nonatomic, strong) PRECard *card;
 
 @end
 
@@ -22,8 +28,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.card = (PRECard *)[[PRECard allInstances] lastObject];
     [self setupUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self refreshLabel];
 }
 
 #pragma mark - UI
@@ -58,7 +69,6 @@
 
 - (void)setupBalanceLabel {
     self.balanceLabel = [UILabel newForAutolayoutAndAddToView:self.scrollView];
-    self.balanceLabel.text = @"$1.24";
     self.balanceLabel.textAlignment = NSTextAlignmentCenter;
     self.balanceLabel.textColor = [UIColor whiteColor];
     
@@ -69,21 +79,41 @@
     [self.scrollView addConstraints:center];
 }
 
+- (void)refreshLabel {
+    self.balanceLabel.text = self.card.balance;
+}
+
 #pragma mark - Refresh Control
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..." attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateStyle = NSDateFormatterShortStyle;
-        formatter.timeStyle = NSDateFormatterShortStyle;
-        NSString *lastUpdate = [NSString stringWithFormat:@"Last updated on %@", [formatter stringFromDate:[NSDate date]]];
-        
-        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdate  attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-        
+    NSAttributedString *previousRefreshTitle = refreshControl.attributedTitle;
+    refreshControl.attributedTitle = [PREMainViewController refreshingDataAttributedString];
+    [PREAPIClient getCardStatusForCurrentUserWithCompletion:^(id responseObject, NSURLResponse *response, NSError *error) {
+        if (error) {
+            refreshControl.attributedTitle = previousRefreshTitle;
+        } else {
+            refreshControl.attributedTitle = [PREMainViewController currentTimeAttributedString];
+            PRECard *card = [PRECard instanceWithPrimaryKey:responseObject[@"number"]];
+            card.status = responseObject[@"status"];
+            card.balance = responseObject[@"balance"];
+            [card save];
+            [self refreshLabel];
+        }
         [refreshControl endRefreshing];
-    });
+    }];
+}
+
++ (NSAttributedString *)refreshingDataAttributedString {
+    return [[NSAttributedString alloc] initWithString:@"Refreshing data..." attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+}
+
++ (NSAttributedString *)currentTimeAttributedString {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = NSDateFormatterShortStyle;
+    formatter.timeStyle = NSDateFormatterShortStyle;
+    NSString *lastUpdate = [NSString stringWithFormat:@"Last updated on %@", [formatter stringFromDate:[NSDate date]]];
+    
+    return [[NSAttributedString alloc] initWithString:lastUpdate  attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
 }
 
 @end

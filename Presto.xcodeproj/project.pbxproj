@@ -10,6 +10,8 @@
 		44805004431D41B2903B2E8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD6278F80844286A1269BFD /* main.m */; };
 		BCA45123264546EB92AEBA24 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86884750D4734C8C95AD4F49 /* libPods.a */; };
 		BE921BC24D3F4D99B9886474 /* PREAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C937F6E36848E8A6278D2F /* PREAppDelegate.m */; };
+		E81AAD9818E2FD4C0028D360 /* PREUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E81AAD9718E2FD4C0028D360 /* PREUser.m */; };
+		E81AAD9C18E30EC60028D360 /* PRECard.m in Sources */ = {isa = PBXBuildFile; fileRef = E81AAD9B18E30EC60028D360 /* PRECard.m */; };
 		E82C07DF18E29B1E000207BF /* PREBottomConstraintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E82C07DE18E29B1E000207BF /* PREBottomConstraintViewController.m */; };
 		E84E9FF418E2724600E53D6A /* PRENavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E84E9FF318E2724600E53D6A /* PRENavigationViewController.m */; };
 		E85717E118E27E03008AFD2E /* PREAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E85717E018E27E03008AFD2E /* PREAPIClient.m */; };
@@ -45,6 +47,10 @@
 		D6148BFC9C7B4F3C9C62B762 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D9BC00B2A4A34D5EADCB1DAD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E0D2B5E25CC94AC2B1BEB989 /* Presto-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Presto-Info.plist"; sourceTree = "<group>"; };
+		E81AAD9618E2FD4C0028D360 /* PREUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREUser.h; sourceTree = "<group>"; };
+		E81AAD9718E2FD4C0028D360 /* PREUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREUser.m; sourceTree = "<group>"; };
+		E81AAD9A18E30EC60028D360 /* PRECard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRECard.h; sourceTree = "<group>"; };
+		E81AAD9B18E30EC60028D360 /* PRECard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRECard.m; sourceTree = "<group>"; };
 		E82C07DD18E29B1E000207BF /* PREBottomConstraintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREBottomConstraintViewController.h; sourceTree = "<group>"; };
 		E82C07DE18E29B1E000207BF /* PREBottomConstraintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREBottomConstraintViewController.m; sourceTree = "<group>"; };
 		E84E9FF218E2724600E53D6A /* PRENavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRENavigationViewController.h; sourceTree = "<group>"; };
@@ -137,6 +143,8 @@
 		483C9FBBF5B4451B8A0D4739 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E81AAD9918E30EC00028D360 /* Card */,
+				E81AAD9518E2FD430028D360 /* User */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -253,6 +261,24 @@
 				7C6D3210421D43A688D920B7 /* Resources */,
 			);
 			path = Presto;
+			sourceTree = "<group>";
+		};
+		E81AAD9518E2FD430028D360 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				E81AAD9618E2FD4C0028D360 /* PREUser.h */,
+				E81AAD9718E2FD4C0028D360 /* PREUser.m */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		E81AAD9918E30EC00028D360 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				E81AAD9A18E30EC60028D360 /* PRECard.h */,
+				E81AAD9B18E30EC60028D360 /* PRECard.m */,
+			);
+			path = Card;
 			sourceTree = "<group>";
 		};
 		E82C07DC18E29B12000207BF /* Bottom Constraint */ = {
@@ -451,6 +477,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E81AAD9818E2FD4C0028D360 /* PREUser.m in Sources */,
+				E81AAD9C18E30EC60028D360 /* PRECard.m in Sources */,
 				BE921BC24D3F4D99B9886474 /* PREAppDelegate.m in Sources */,
 				E85717E118E27E03008AFD2E /* PREAPIClient.m in Sources */,
 				E8F6A3D218E264FD00CD3D44 /* UIView+AutoLayout.m in Sources */,

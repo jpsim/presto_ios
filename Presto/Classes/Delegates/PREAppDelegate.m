@@ -7,17 +7,82 @@
 //
 
 #import "PREAppDelegate.h"
+// View Controllers
 #import "PRENavigationViewController.h"
 #import "PRELoginViewController.h"
+#import "PREMainViewController.h"
+// Model
+#import "FCModel.h"
+#import "PREUser.h"
 
 @implementation PREAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self setupModel];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[PRENavigationViewController alloc] initWithRootViewController:[[PRELoginViewController alloc] initWithLoginType:PRELoginFieldTypeUsername]];
+    if ([PREUser count] > 0) {
+        self.window.rootViewController = [[PREMainViewController alloc] init];
+    } else {
+        self.window.rootViewController = [[PRENavigationViewController alloc] initWithRootViewController:[[PRELoginViewController alloc] initWithLoginType:PRELoginFieldTypeUsername]];
+    }
     [self setupAppearance];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)setupModel {
+    NSString *dbPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"presto.sqlite3"];
+    
+    [FCModel openDatabaseAtPath:dbPath withSchemaBuilder:^(FMDatabase *db, int *schemaVersion) {
+        [db setCrashOnErrors:YES];
+        [db beginTransaction];
+        
+        void (^failedAt)(int statement) = ^(int statement){
+            int lastErrorCode = db.lastErrorCode;
+            NSString *lastErrorMessage = db.lastErrorMessage;
+            [db rollback];
+            NSAssert3(0, @"Migration statement %d failed, code %d: %@", statement, lastErrorCode, lastErrorMessage);
+        };
+        
+        if (*schemaVersion < 1) {
+            if (![db executeUpdate:
+                  @"CREATE TABLE PREUser ("
+                  @"    cardNumber   TEXT PRIMARY KEY,"
+                  @"    username     TEXT NOT NULL DEFAULT '',"
+                  @"    password     TEXT NOT NULL DEFAULT '',"
+                  @"    firstName    TEXT NOT NULL DEFAULT '',"
+                  @"    lastName     TEXT NOT NULL DEFAULT '',"
+                  @"    address1     TEXT NOT NULL DEFAULT '',"
+                  @"    address2     TEXT NOT NULL DEFAULT '',"
+                  @"    city         TEXT NOT NULL DEFAULT '',"
+                  @"    province     TEXT NOT NULL DEFAULT '',"
+                  @"    country      TEXT NOT NULL DEFAULT '',"
+                  @"    postalCode   TEXT NOT NULL DEFAULT '',"
+                  @"    phoneNumber  TEXT NOT NULL DEFAULT '',"
+                  @"    email        TEXT NOT NULL DEFAULT '',"
+                  @"    securityQuestion TEXT NOT NULL DEFAULT '',"
+                  @"    securityAnswer   TEXT NOT NULL DEFAULT '',"
+                  @"    createdTime  INTEGER NOT NULL,"
+                  @"    modifiedTime INTEGER NOT NULL"
+                  @");"
+                  ]) failedAt(1);
+            
+            if (![db executeUpdate:@"CREATE UNIQUE INDEX IF NOT EXISTS name ON PREUser (username);"]) failedAt(2);
+            
+            if (![db executeUpdate:
+                  @"CREATE TABLE PRECard ("
+                  @"    number      TEXT PRIMARY KEY,"
+                  @"    status      TEXT NOT NULL,"
+                  @"    balance     TEXT NOT NULL,"
+                  @"    updatedTime INTEGER NOT NULL"
+                  @");"
+                  ]) failedAt(3);
+            
+            *schemaVersion = 1;
+        }
+        
+        [db commit];
+    }];
 }
 
 - (void)setupAppearance {

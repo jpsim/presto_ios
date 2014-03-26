@@ -7,37 +7,29 @@
 //
 
 #import "PREAPIClient.h"
+#import "PREUser.h"
 
 @implementation PREAPIClient
 
++ (void)getCardStatusForCurrentUserWithCompletion:(PREAPIResponseBlock)completion {
+    PREUser *user = [[PREUser allInstances] lastObject];
+    if (user.username.length > 0) {
+        [self getCardStatusWithUsername:user.username password:user.password completion:completion];
+    } else {
+        [self getCardStatusWithCardNumber:user.cardNumber completion:completion];
+    }
+}
+
 + (void)getCardStatusWithUsername:(NSString *)username password:(NSString *)password completion:(PREAPIResponseBlock)completion {
-    [self getPath:[NSString stringWithFormat:@"card_status/%@/%@", username, password] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(nil, error);
-            });
-        } else {
-            id responseObject = [self objectFromResponseData:data error:&error];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(responseObject, error);
-            });
-        }
-    }];
+    [self getPath:[NSString stringWithFormat:@"card_status/%@/%@", username, password] completionHandler:completion];
 }
 
 + (void)getCardStatusWithCardNumber:(NSString *)cardNumber completion:(PREAPIResponseBlock)completion {
-    [self getPath:[NSString stringWithFormat:@"card_status/%@", cardNumber] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(nil, error);
-            });
-        } else {
-            id responseObject = [self objectFromResponseData:data error:&error];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(responseObject, error);
-            });
-        }
-    }];
+    [self getPath:[NSString stringWithFormat:@"card_status/%@", cardNumber] completionHandler:completion];
+}
+
++ (void)getUserWithUsername:(NSString *)username password:(NSString *)password completion:(PREAPIResponseBlock)completion {
+    [self getPath:[NSString stringWithFormat:@"me/%@/%@", username, password] completionHandler:completion];
 }
 
 #pragma mark - Private
@@ -67,7 +59,18 @@
 }
 
 + (void)getPath:(NSString *)path completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler {
-    [[[self sharedClient] dataTaskWithURL:[self urlWithPath:path] completionHandler:completionHandler] resume];
+    [[[self sharedClient] dataTaskWithURL:[self urlWithPath:path] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(nil, response, error);
+            });
+        } else {
+            id responseObject = [self objectFromResponseData:data error:&error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(responseObject, response, error);
+            });
+        }
+    }] resume];
 }
 
 @end
