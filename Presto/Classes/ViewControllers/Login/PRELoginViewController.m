@@ -7,6 +7,8 @@
 //
 
 #import "PRELoginViewController.h"
+// View Controllers
+#import "PREMainViewController.h"
 // Classes
 #import "PREAPIClient.h"
 #import "SVProgressHUD.h"
@@ -192,6 +194,7 @@
 }
 
 - (void)launchMainApp {
+    [self presentViewController:[[PREMainViewController alloc] init] animated:NO completion:nil];
 }
 
 - (void)cardLogin {
@@ -230,7 +233,7 @@
     return YES;
 }
 
-#pragma mark - Keyboard Methods
+#pragma mark - Keyboard
 
 - (void)dismissKeyboard {
     [self.cardField resignFirstResponder];

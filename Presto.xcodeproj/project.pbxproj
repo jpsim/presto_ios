@@ -15,6 +15,7 @@
 		E85717E118E27E03008AFD2E /* PREAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E85717E018E27E03008AFD2E /* PREAPIClient.m */; };
 		E8BC795218E260D200A5AE27 /* PRELoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BC795118E260D200A5AE27 /* PRELoginViewController.m */; };
 		E8BC795618E2613800A5AE27 /* UIColor+PREAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E8BC795518E2613800A5AE27 /* UIColor+PREAdditions.m */; };
+		E8CEA80F18E2A7C90088C4E9 /* PREMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CEA80E18E2A7C90088C4E9 /* PREMainViewController.m */; };
 		E8F6A3CE18E2649C00CD3D44 /* PRELoginField.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F6A3CD18E2649C00CD3D44 /* PRELoginField.m */; };
 		E8F6A3D218E264FD00CD3D44 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F6A3D118E264FD00CD3D44 /* UIView+AutoLayout.m */; };
 		F1ED4CF8BAB54C05B968D70F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D748DA7A88E45A5B22983B2 /* Images.xcassets */; };
@@ -54,6 +55,8 @@
 		E8BC795118E260D200A5AE27 /* PRELoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRELoginViewController.m; sourceTree = "<group>"; };
 		E8BC795418E2613800A5AE27 /* UIColor+PREAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PREAdditions.h"; sourceTree = "<group>"; };
 		E8BC795518E2613800A5AE27 /* UIColor+PREAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PREAdditions.m"; sourceTree = "<group>"; };
+		E8CEA80D18E2A7C90088C4E9 /* PREMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PREMainViewController.h; sourceTree = "<group>"; };
+		E8CEA80E18E2A7C90088C4E9 /* PREMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREMainViewController.m; sourceTree = "<group>"; };
 		E8F6A3CC18E2649C00CD3D44 /* PRELoginField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRELoginField.h; sourceTree = "<group>"; };
 		E8F6A3CD18E2649C00CD3D44 /* PRELoginField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRELoginField.m; sourceTree = "<group>"; };
 		E8F6A3D018E264FD00CD3D44 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AutoLayout.h"; sourceTree = "<group>"; };
@@ -233,6 +236,7 @@
 		C85CEB95D2804480B8F15311 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E8CEA80C18E2A7BE0088C4E9 /* Main */,
 				E82C07DC18E29B12000207BF /* Bottom Constraint */,
 				E84E9FF118E2723A00E53D6A /* Navigation Controller */,
 				E8BC794F18E260C800A5AE27 /* Login */,
@@ -294,6 +298,15 @@
 				E8BC795518E2613800A5AE27 /* UIColor+PREAdditions.m */,
 			);
 			path = UIColor;
+			sourceTree = "<group>";
+		};
+		E8CEA80C18E2A7BE0088C4E9 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E8CEA80D18E2A7C90088C4E9 /* PREMainViewController.h */,
+				E8CEA80E18E2A7C90088C4E9 /* PREMainViewController.m */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		E8F6A3CB18E2649100CD3D44 /* Login Field */ = {
@@ -443,6 +456,7 @@
 				E8F6A3D218E264FD00CD3D44 /* UIView+AutoLayout.m in Sources */,
 				E82C07DF18E29B1E000207BF /* PREBottomConstraintViewController.m in Sources */,
 				44805004431D41B2903B2E8B /* main.m in Sources */,
+				E8CEA80F18E2A7C90088C4E9 /* PREMainViewController.m in Sources */,
 				E84E9FF418E2724600E53D6A /* PRENavigationViewController.m in Sources */,
 				E8F6A3CE18E2649C00CD3D44 /* PRELoginField.m in Sources */,
 				E8BC795218E260D200A5AE27 /* PRELoginViewController.m in Sources */,
