@@ -9,6 +9,8 @@
 #import "PREAPIClient.h"
 #import "PREUser.h"
 
+static NSString *const kPREAPIKEY = @"";
+
 @implementation PREAPIClient
 
 + (void)getCardStatusForCurrentUserWithCompletion:(PREAPIResponseBlock)completion {
@@ -55,7 +57,8 @@
 #pragma mark - Helpers
 
 + (NSURL *)urlWithPath:(NSString *)path {
-    return [NSURL URLWithString:path relativeToURL:[NSURL URLWithString:@"https://presto-api.herokuapp.com"]];
+    return [NSURL URLWithString:[path stringByAppendingFormat:@"?api_key=%@", kPREAPIKEY]
+                  relativeToURL:[NSURL URLWithString:@"https://presto-api.herokuapp.com"]];
 }
 
 + (void)getPath:(NSString *)path completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler {
