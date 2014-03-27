@@ -41,7 +41,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self refresh];
+    [self programaticallyRefresh];
 }
 
 #pragma mark - UI
@@ -116,7 +116,15 @@
     self.balanceLabel.text = self.card.balance;
 }
 
-#pragma mark - Refresh Control
+#pragma mark - Refresh
+
+- (void)programaticallyRefresh {
+    // Hack necessary to keep UIRefreshControl's tintColor
+    [self.scrollView setContentOffset:CGPointMake(0, -1.0f) animated:NO];
+    [self.scrollView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
+    [self.refreshControl beginRefreshing];
+    [self refresh];
+}
 
 - (void)refresh {
     NSAttributedString *previousRefreshTitle = self.refreshControl.attributedTitle;
