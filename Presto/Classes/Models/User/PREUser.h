@@ -33,8 +33,6 @@
 // non-columns
 @property (nonatomic, readonly) PRECard *card;
 
-+ (int)count;
-
 - (void)updateWithAPIResponseDict:(NSDictionary *)dict;
 
 + (void)saveNewUserWithUsername:(NSString *)username password:(NSString *)password card:(PRECard *)card;

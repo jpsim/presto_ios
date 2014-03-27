@@ -13,14 +13,16 @@
 // Model
 #import "PREUser.h"
 #import "PRECard.h"
+#import "PRECreditCard.h"
 // API
 #import "PREAPIClient.h"
 
-@interface PREMainViewController ()
+@interface PREMainViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *balanceLabel;
 @property (nonatomic, strong) PRECard *card;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -37,6 +39,11 @@
     [self refreshLabel];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self refresh];
+}
+
 #pragma mark - UI
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -49,6 +56,7 @@
     [self setupScrollView];
     [self setupRefreshControl];
     [self setupBalanceLabel];
+    [self setupLogoutButton];
 }
 
 - (void)setupScrollView {
@@ -61,10 +69,10 @@
 }
 
 - (void)setupRefreshControl {
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.tintColor = [UIColor whiteColor];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.scrollView addSubview:refreshControl];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.scrollView addSubview:self.refreshControl];
 }
 
 - (void)setupBalanceLabel {
@@ -79,27 +87,52 @@
     [self.scrollView addConstraints:center];
 }
 
+- (void)setupLogoutButton {
+    UIButton *logoutButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [logoutButton prepareForAutolayoutAndAddToView:self.view];
+    [logoutButton setImage:[[UIImage imageNamed:@"logout"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [logoutButton invalidateIntrinsicContentSize];
+    [logoutButton addTarget:self action:@selector(promptForLogout) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Constraints
+    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:logoutButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1.0f
+                                                             constant:15.0f];
+    NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:logoutButton
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0f
+                                                               constant:-15.0f];
+    [self.view addConstraints:@[left, bottom]];
+}
+
 - (void)refreshLabel {
     self.balanceLabel.text = self.card.balance;
 }
 
 #pragma mark - Refresh Control
 
-- (void)refresh:(UIRefreshControl *)refreshControl {
-    NSAttributedString *previousRefreshTitle = refreshControl.attributedTitle;
-    refreshControl.attributedTitle = [PREMainViewController refreshingDataAttributedString];
+- (void)refresh {
+    NSAttributedString *previousRefreshTitle = self.refreshControl.attributedTitle;
+    self.refreshControl.attributedTitle = [PREMainViewController refreshingDataAttributedString];
     [PREAPIClient getCardStatusForCurrentUserWithCompletion:^(id responseObject, NSURLResponse *response, NSError *error) {
         if (error) {
-            refreshControl.attributedTitle = previousRefreshTitle;
+            self.refreshControl.attributedTitle = previousRefreshTitle;
         } else {
-            refreshControl.attributedTitle = [PREMainViewController currentTimeAttributedString];
+            self.refreshControl.attributedTitle = [PREMainViewController currentTimeAttributedString];
             PRECard *card = [PRECard instanceWithPrimaryKey:responseObject[@"number"]];
             card.status = responseObject[@"status"];
             card.balance = responseObject[@"balance"];
             [card save];
             [self refreshLabel];
         }
-        [refreshControl endRefreshing];
+        [self.refreshControl endRefreshing];
     }];
 }
 
@@ -114,6 +147,29 @@
     NSString *lastUpdate = [NSString stringWithFormat:@"Last updated on %@", [formatter stringFromDate:[NSDate date]]];
     
     return [[NSAttributedString alloc] initWithString:lastUpdate  attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+}
+
+#pragma mark - Actions
+
+- (void)promptForLogout {
+    [[[UIAlertView alloc] initWithTitle:@"Logout"
+                               message:@"Are you sure you want to log out?"
+                              delegate:self
+                     cancelButtonTitle:@"Cancel"
+                     otherButtonTitles:@"Log Out", nil] show];
+}
+
+- (void)logout {
+    [PREUser executeUpdateQuery:@"DELETE FROM $T"];
+    [PRECard executeUpdateQuery:@"DELETE FROM $T"];
+    [PRECreditCard executeUpdateQuery:@"DELETE FROM $T"];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) [self logout];
 }
 
 @end

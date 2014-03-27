@@ -57,6 +57,16 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if ([PREUser numberOfInstances] > 0) {
+            [self presentViewController:[[PREMainViewController alloc] init] animated:NO completion:nil];
+        }
+    });
+}
+
 #pragma mark - UI
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -203,7 +213,11 @@
 
 - (void)launchMainApp {
     [SVProgressHUD dismiss];
-    [self presentViewController:[[PREMainViewController alloc] init] animated:NO completion:nil];
+    [self presentViewController:[[PREMainViewController alloc] init] animated:YES completion:^{
+        self.usernameField.text = @"";
+        self.passwordField.text = @"";
+        self.cardField.text = @"";
+    }];
 }
 
 - (void)cardLogin {

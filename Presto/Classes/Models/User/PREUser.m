@@ -25,12 +25,6 @@
     return [PRECard instanceWithPrimaryKey:self.cardNumber];
 }
 
-#pragma mark - Count
-
-+ (int)count {
-    return [[self firstValueFromQuery:@"SELECT COUNT(*) FROM $T"] intValue];
-}
-
 #pragma mark - Description
 
 - (NSString *)description {

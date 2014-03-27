@@ -13,19 +13,14 @@
 #import "PREMainViewController.h"
 // Model
 #import "FCModel.h"
-#import "PREUser.h"
 
 @implementation PREAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self setupModel];
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    if ([PREUser count] > 0) {
-        self.window.rootViewController = [[PREMainViewController alloc] init];
-    } else {
-        self.window.rootViewController = [[PRENavigationViewController alloc] initWithRootViewController:[[PRELoginViewController alloc] initWithLoginType:PRELoginFieldTypeUsername]];
-    }
     [self setupAppearance];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = [[PRENavigationViewController alloc] initWithRootViewController:[[PRELoginViewController alloc] initWithLoginType:PRELoginFieldTypeUsername]];
     [self.window makeKeyAndVisible];
     return YES;
 }
