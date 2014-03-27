@@ -75,6 +75,15 @@
                   @");"
                   ]) failedAt(3);
             
+            if (![db executeUpdate:
+                  @"CREATE TABLE PRECreditCard ("
+                  @"    number      TEXT PRIMARY KEY,"
+                  @"    name        TEXT NOT NULL,"
+                  @"    expiryMonth TEXT NOT NULL,"
+                  @"    expiryYear  TEXT NOT NULL"
+                  @");"
+                  ]) failedAt(4);
+            
             *schemaVersion = 1;
         }
         
